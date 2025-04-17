@@ -729,7 +729,12 @@ install_gpustack() {
   fi
 
   # shellcheck disable=SC2090,SC2086
-  pipx install --force --verbose $install_args --python "$(which python3)" "$INSTALL_PACKAGE_SPEC"
+  # Use the pip cache when installing packages to enable progress display during downloads
+  PIPX_HOME=$(pipx environment --value PIPX_HOME)
+  python3 -m venv $PIPX_HOME/venvs/temp
+  $PIPX_HOME/venvs/temp/bin/python -m pip install --force-reinstall $install_args "$INSTALL_PACKAGE_SPEC"
+  rm -rf $PIPX_HOME/venvs/temp
+  pipx install --force --verbose $install_args "$INSTALL_PACKAGE_SPEC"
   # Workaround for issue #581
   pipx inject gpustack pydantic==2.9.2 --force > /dev/null 2>&1
 
