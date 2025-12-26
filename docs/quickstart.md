@@ -1,6 +1,6 @@
 # Quickstart
 
-This guide will walk you through running GPUStack on your own self-hosted GPU servers. To use [cloud GPUs](./tutorials/adding-gpucluster-using-digitalocean.md), or integrating with an  [existing Kubernetes cluster](./tutorials/adding-gpucluster-using-kubernetes.md), see the relevant tutorials.
+This guide will walk you through running GPUStack on your own self-hosted GPU servers. To use [cloud GPUs](./tutorials/adding-gpucluster-using-digitalocean.md), or integrating with an [existing Kubernetes cluster](./tutorials/adding-gpucluster-using-kubernetes.md), see the relevant tutorials.
 
 !!! info "Prerequisites"
 
@@ -17,6 +17,7 @@ Run the following command to install and start the GPUStack server using [Docker
 sudo docker run -d --name gpustack \
     --restart unless-stopped \
     -p 80:80 \
+    -p 10161:10161 \
     --volume gpustack-data:/var/lib/gpustack \
     gpustack/gpustack
 ```
@@ -29,6 +30,7 @@ sudo docker run -d --name gpustack \
     sudo docker run -d --name gpustack \
         --restart unless-stopped \
         -p 80:80 \
+        -p 10161:10161 \
         --volume gpustack-data:/var/lib/gpustack \
         quay.io/gpustack/gpustack \
         --system-default-container-registry quay.io

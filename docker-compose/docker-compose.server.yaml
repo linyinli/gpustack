@@ -7,6 +7,7 @@ services:
       - gpustack-data:/var/lib/gpustack
     ports:
       - "80:80"
+      - "10161:10161"
 
   prometheus:
     image: ${IMAGE_REGISTRY:-docker.io}/${IMAGE_NAMESPACE:-prom}/prometheus:${PROMETHEUS_TAG:-latest}
@@ -15,8 +16,8 @@ services:
     ports:
       - "9090:9090"
     command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--web.enable-remote-write-receiver'
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--web.enable-remote-write-receiver"
     volumes:
       - ./prometheus:/etc/prometheus
       - prom_data:/prometheus
@@ -35,8 +36,6 @@ services:
       - ./grafana/grafana_dashboards:/etc/dashboards:ro
     ports:
       - "3000:3000"
-
-
 
 volumes:
   prom_data: {}

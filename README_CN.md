@@ -42,17 +42,20 @@ GPUStack 是一个开源的 GPU 集群管理器，专为高效的 AI 模型部�
 GPUStack 采用插件式架构，可以轻松添加新的 AI 模型、推理引擎和 GPU 硬件。我们与合作伙伴和开源社区紧密合作，在不同的推理引擎和 GPU 上测试和优化新兴模型。以下是当前支持的推理引擎、GPU 和模型列表，该列表将随着时间的推移继续扩展。
 
 **经过测试的推理引擎：**
+
 - vLLM
 - SGLang
 - TensorRT-LLM
 - MindIE
 
 **经过测试的 GPU：**
+
 - NVIDIA A100
 - NVIDIA H100/H200
 - Ascend 910B
 
 **经过调优的模型：**
+
 - Qwen3
 - gpt-oss
 - GLM-4.5-Air
@@ -68,6 +71,7 @@ GPUStack 使开发团队、IT 组织和服务提供商能够大规模地提供�
 ![gpustack-v2-architecture](docs/assets/gpustack-v2-architecture.png)
 
 GPUStack 为部署 AI 模型提供了一个强大的框架。其核心功能包括：
+
 - **多集群 GPU 管理。** 跨多个环境管理 GPU 集群。这包括本地服务器、Kubernetes 集群和云提供商。
 - **可插拔推理引擎。** 自动配置高性能推理引擎，如 vLLM、SGLang 和 TensorRT-LLM。您也可以根据需要添加自定义推理引擎。
 - **性能优化配置。** 提供预调优模式，用于低延迟或高吞吐量。GPUStack 支持扩展的 KV 缓存系统，如 LMCache 和 HiCache，以减少 TTFT。它还包括对推测性解码方法（如 EAGLE3、MTP 和 N-grams）的内置支持。
@@ -90,6 +94,7 @@ GPUStack 为部署 AI 模型提供了一个强大的框架。其核心功能包�
 sudo docker run -d --name gpustack \
     --restart unless-stopped \
     -p 80:80 \
+    -p 10161:10161 \
     --volume gpustack-data:/var/lib/gpustack \
     gpustack/gpustack
 ```
@@ -103,10 +108,12 @@ sudo docker run -d --name gpustack \
 sudo docker run -d --name gpustack \
     --restart unless-stopped \
     -p 80:80 \
+    -p 10161:10161 \
     --volume gpustack-data:/var/lib/gpustack \
     quay.io/gpustack/gpustack \
     --system-default-container-registry quay.io
 ```
+
 </details>
 
 检查 GPUStack 启动日志：
@@ -158,7 +165,7 @@ sudo docker exec gpustack cat /var/lib/gpustack/initial_admin_password
 
 ![模型运行中](docs/assets/quick-start/model-running.png)
 
-5.  点击导航菜单中的 `Playground - Chat`，检查右上角 `Model` 下拉菜单中是否选中了 `qwen3-0.6b` 模型。现在您可以在 UI  playground 中与模型聊天了。
+5.  点击导航菜单中的 `Playground - Chat`，检查右上角 `Model` 下拉菜单中是否选中了 `qwen3-0.6b` 模型。现在您可以在 UI playground 中与模型聊天了。
 
 ![快速聊天](docs/assets/quick-start/quick-chat.png)
 

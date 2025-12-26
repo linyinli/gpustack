@@ -70,6 +70,7 @@ After preparing the internal container registry with the required images, you ca
  sudo docker run -d --name gpustack \
      --restart unless-stopped \
      -p 80:80 \
+     -p 10161:10161 \
      --volume gpustack-data:/var/lib/gpustack \
 -    gpustack/gpustack
 +    <your_internal_registry>/gpustack/gpustack \

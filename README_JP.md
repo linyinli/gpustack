@@ -29,9 +29,9 @@
 
 ## 概要
 
-GPUStackは、効率的なAIモデルデプロイメントのために設計されたオープンソースのGPUクラスタマネージャーです。独自のGPUハードウェア上でモデルを効率的に実行できるように、最適な推論エンジンの選択、GPUリソースのスケジューリング、モデルアーキテクチャの分析、デプロイメントパラメータの自動設定を行います。
+GPUStack は、効率的な AI モデルデプロイメントのために設計されたオープンソースの GPU クラスタマネージャーです。独自の GPU ハードウェア上でモデルを効率的に実行できるように、最適な推論エンジンの選択、GPU リソースのスケジューリング、モデルアーキテクチャの分析、デプロイメントパラメータの自動設定を行います。
 
-以下の図は、GPUStackが最適化されていないvLLMベースラインと比較して、どのように推論スループットを向上させるかを示しています：
+以下の図は、GPUStack が最適化されていない vLLM ベースラインと比較して、どのように推論スループットを向上させるかを示しています：
 
 ![a100-throughput-comparison](docs/assets/a100-throughput-comparison.png)
 
@@ -39,20 +39,23 @@ GPUStackは、効率的なAIモデルデプロイメントのために設計さ�
 
 ## テスト済み推論エンジン、GPU、およびモデル
 
-GPUStackはプラグインアーキテクチャを採用しており、新しいAIモデル、推論エンジン、GPUハードウェアの追加が容易です。パートナーやオープンソースコミュニティと緊密に連携し、様々な推論エンジンとGPU間で新興モデルのテストと最適化を行っています。以下は、現在サポートされている推論エンジン、GPU、モデルのリストです。これらは時間の経過とともに拡大を続けます。
+GPUStack はプラグインアーキテクチャを採用しており、新しい AI モデル、推論エンジン、GPU ハードウェアの追加が容易です。パートナーやオープンソースコミュニティと緊密に連携し、様々な推論エンジンと GPU 間で新興モデルのテストと最適化を行っています。以下は、現在サポートされている推論エンジン、GPU、モデルのリストです。これらは時間の経過とともに拡大を続けます。
 
 **テスト済み推論エンジン:**
+
 - vLLM
 - SGLang
 - TensorRT-LLM
 - MindIE
 
-**テスト済みGPU:**
+**テスト済み GPU:**
+
 - NVIDIA A100
 - NVIDIA H100/H200
 - Ascend 910B
 
 **チューニング済みモデル:**
+
 - Qwen3
 - gpt-oss
 - GLM-4.5-Air
@@ -61,23 +64,24 @@ GPUStackはプラグインアーキテクチャを採用しており、新しい
 
 ## アーキテクチャ
 
-GPUStackは、開発チーム、IT組織、およびサービスプロバイダーが大規模なモデルサービスを提供できるようにします。LLM、音声、画像、ビデオモデル向けの業界標準APIをサポートしています。このプラットフォームには、組み込みのユーザー認証とアクセス制御、GPUパフォーマンスと使用率のリアルタイム監視、トークン使用量とAPIリクエストレートの詳細なメータリングが含まれています。
+GPUStack は、開発チーム、IT 組織、およびサービスプロバイダーが大規模なモデルサービスを提供できるようにします。LLM、音声、画像、ビデオモデル向けの業界標準 API をサポートしています。このプラットフォームには、組み込みのユーザー認証とアクセス制御、GPU パフォーマンスと使用率のリアルタイム監視、トークン使用量と API リクエストレートの詳細なメータリングが含まれています。
 
-以下の図は、単一のGPUStackサーバーがオンプレミスとクラウド環境の両方にまたがる複数のGPUクラスタをどのように管理できるかを示しています。GPUStackスケジューラは、リソース使用率を最大化するためにGPUを割り当て、最適なパフォーマンスを得るために適切な推論エンジンを選択します。管理者は、統合されたGrafanaおよびPrometheusダッシュボードを通じて、システムの健全性とメトリクスに関する完全な可視性も得ます。
+以下の図は、単一の GPUStack サーバーがオンプレミスとクラウド環境の両方にまたがる複数の GPU クラスタをどのように管理できるかを示しています。GPUStack スケジューラは、リソース使用率を最大化するために GPU を割り当て、最適なパフォーマンスを得るために適切な推論エンジンを選択します。管理者は、統合された Grafana および Prometheus ダッシュボードを通じて、システムの健全性とメトリクスに関する完全な可視性も得ます。
 
 ![gpustack-v2-architecture](docs/assets/gpustack-v2-architecture.png)
 
-GPUStackは、AIモデルをデプロイするための強力なフレームワークを提供します。その中核的な機能は以下の通りです：
-- **マルチクラスタGPU管理:** 複数の環境にわたるGPUクラスタを管理します。これには、オンプレミスサーバー、Kubernetesクラスタ、およびクラウドプロバイダが含まれます。
-- **プラグ可能な推論エンジン:** vLLM、SGLang、TensorRT-LLMなどの高性能推論エンジンを自動的に設定します。必要に応じてカスタム推論エンジンを追加することもできます。
-- **パフォーマンス最適化設定:** 低レイテンシまたは高スループット向けの事前調整済みモードを提供します。GPUStackは、LMCacheやHiCacheなどの拡張KVキャッシュシステムをサポートし、TTFTを削減します。また、EAGLE3、MTP、N-gramなどの投機的デコード手法の組み込みサポートも含まれます。
+GPUStack は、AI モデルをデプロイするための強力なフレームワークを提供します。その中核的な機能は以下の通りです：
+
+- **マルチクラスタ GPU 管理:** 複数の環境にわたる GPU クラスタを管理します。これには、オンプレミスサーバー、Kubernetes クラスタ、およびクラウドプロバイダが含まれます。
+- **プラグ可能な推論エンジン:** vLLM、SGLang、TensorRT-LLM などの高性能推論エンジンを自動的に設定します。必要に応じてカスタム推論エンジンを追加することもできます。
+- **パフォーマンス最適化設定:** 低レイテンシまたは高スループット向けの事前調整済みモードを提供します。GPUStack は、LMCache や HiCache などの拡張 KV キャッシュシステムをサポートし、TTFT を削減します。また、EAGLE3、MTP、N-gram などの投機的デコード手法の組み込みサポートも含まれます。
 - **エンタープライズグレードの運用:** 自動化された障害回復、負荷分散、監視、認証、およびアクセス制御のサポートを提供します。
 
 ## クイックスタート
 
 ### 前提条件
 
-1.  少なくとも1つの NVIDIA GPU を搭載したノード。他の GPU タイプについては、GPUStack UI で worker を追加する際のガイドラインを参照するか、詳細については[インストールドキュメント](https://docs.gpustack.ai/latest/installation/requirements/)を参照してください。
+1.  少なくとも 1 つの NVIDIA GPU を搭載したノード。他の GPU タイプについては、GPUStack UI で worker を追加する際のガイドラインを参照するか、詳細については[インストールドキュメント](https://docs.gpustack.ai/latest/installation/requirements/)を参照してください。
 2.  worker ノードに NVIDIA ドライバー、[Docker](https://docs.docker.com/engine/install/)、[NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html) がインストールされていることを確認してください。
 3.  （オプション）GPUStack server をホストするための CPU ノード。GPUStack server は GPU を必要とせず、CPU のみのマシンで実行できます。[Docker](https://docs.docker.com/engine/install/) がインストールされている必要があります。Docker Desktop（Windows および macOS 用）もサポートされています。専用の CPU ノードがない場合は、GPU worker ノードと同じマシンに GPUStack server をインストールできます。
 4.  GPUStack worker ノードは Linux のみをサポートしています。Windows を使用する場合は、WSL2 の使用を検討し、Docker Desktop の使用は避けてください。macOS は GPUStack worker ノードとしてサポートされていません。
@@ -90,6 +94,7 @@ GPUStackは、AIモデルをデプロイするための強力なフレームワ�
 sudo docker run -d --name gpustack \
     --restart unless-stopped \
     -p 80:80 \
+    -p 10161:10161 \
     --volume gpustack-data:/var/lib/gpustack \
     gpustack/gpustack
 ```
@@ -103,10 +108,12 @@ sudo docker run -d --name gpustack \
 sudo docker run -d --name gpustack \
     --restart unless-stopped \
     -p 80:80 \
+    -p 10161:10161 \
     --volume gpustack-data:/var/lib/gpustack \
     quay.io/gpustack/gpustack \
     --system-default-container-registry quay.io
 ```
+
 </details>
 
 GPUStack の起動ログを確認します：
@@ -148,7 +155,7 @@ sudo docker exec gpustack cat /var/lib/gpustack/initial_admin_password
 
 ### モデルのデプロイ
 
-1. GPUStack UIの`Catalog`ページに移動します。
+1. GPUStack UI の`Catalog`ページに移動します。
 
 2. 利用可能なモデルのリストから`Qwen3 0.6B`モデルを選択します。
 
@@ -156,23 +163,23 @@ sudo docker exec gpustack cat /var/lib/gpustack/initial_admin_password
 
 ![カタログからqwen3をデプロイ](docs/assets/quick-start/quick-start-qwen3.png)
 
-4. GPUStackはモデルファイルのダウンロードとモデルのデプロイを開始します。デプロイステータスが`Running`と表示されたら、モデルは正常にデプロイされています。
+4. GPUStack はモデルファイルのダウンロードとモデルのデプロイを開始します。デプロイステータスが`Running`と表示されたら、モデルは正常にデプロイされています。
 
 ![モデルが実行中](docs/assets/quick-start/model-running.png)
 
-5. ナビゲーションメニューで`Playground - Chat`をクリックし、右上の`Model`ドロップダウンからモデル`qwen3-0.6b`が選択されていることを確認します。これでUIプレイグラウンドでモデルとチャットできるようになります。
+5. ナビゲーションメニューで`Playground - Chat`をクリックし、右上の`Model`ドロップダウンからモデル`qwen3-0.6b`が選択されていることを確認します。これで UI プレイグラウンドでモデルとチャットできるようになります。
 
 ![クイックチャット](docs/assets/quick-start/quick-chat.png)
 
-### API経由でモデルを使用
+### API 経由でモデルを使用
 
 1. ユーザーアバターにカーソルを合わせて`API Keys`ページに移動し、`New API Key`ボタンをクリックします。
 
 2. `Name`を入力し、`Save`ボタンをクリックします。
 
-3. 生成されたAPIキーをコピーし、安全な場所に保存します。このキーは作成時に一度しか確認できないことに注意してください。
+3. 生成された API キーをコピーし、安全な場所に保存します。このキーは作成時に一度しか確認できないことに注意してください。
 
-4. これで、このAPIキーを使用して、GPUStackが提供するOpenAI互換のAPIエンドポイントにアクセスできます。例えば、以下のようにcurlを使用します：
+4. これで、この API キーを使用して、GPUStack が提供する OpenAI 互換の API エンドポイントにアクセスできます。例えば、以下のように curl を使用します：
 
 ```bash
 # `your_api_key` と `your_gpustack_server_url` を
@@ -203,15 +210,15 @@ curl http://your_gpustack_server_url/v1/chat/completions \
 
 ## ビルド
 
-1. Python（バージョン3.10から3.12）をインストールします。
+1. Python（バージョン 3.10 から 3.12）をインストールします。
 
 2. `make build`を実行します。
 
-ビルドされたwheelパッケージは`dist`ディレクトリにあります。
+ビルドされた wheel パッケージは`dist`ディレクトリにあります。
 
 ## 貢献
 
-GPUStackへの貢献に興味がある場合は、[貢献ガイド](./docs/contributing.md)をお読みください。
+GPUStack への貢献に興味がある場合は、[貢献ガイド](./docs/contributing.md)をお読みください。
 
 ## コミュニティに参加
 

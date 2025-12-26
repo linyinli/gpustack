@@ -42,17 +42,20 @@ For detailed benchmarking methods and results, visit our [Inference Performance 
 GPUStack uses a plug-in architecture that makes it easy to add new AI models, inference engines, and GPU hardware. We work closely with partners and the open-source community to test and optimize emerging models across different inference engines and GPUs. Below is the current list of supported inference engines, GPUs, and models, which will continue to expand over time.
 
 **Tested Inference Engines:**
+
 - vLLM
 - SGLang
 - TensorRT-LLM
 - MindIE
 
 **Tested GPUs:**
+
 - NVIDIA A100
 - NVIDIA H100/H200
 - Ascend 910B
 
 **Tuned Models:**
+
 - Qwen3
 - gpt-oss
 - GLM-4.5-Air
@@ -68,6 +71,7 @@ The figure below illustrates how a single GPUStack server can manage multiple GP
 ![gpustack-v2-architecture](docs/assets/gpustack-v2-architecture.png)
 
 GPUStack provides a powerful framework for deploying AI models. Its core features include:
+
 - **Multi-Cluster GPU Management.** Manages GPU clusters across multiple environments. This includes on-premises servers, Kubernetes clusters, and cloud providers.
 - **Pluggable Inference Engines.** Automatically configures high-performance inference engines such as vLLM, SGLang, and TensorRT-LLM. You can also add custom inference engines as needed.
 - **Performance-Optimized Configurations.** Offers pre-tuned modes for low latency or high throughput. GPUStack supports extended KV cache systems like LMCache and HiCache to reduce TTFT. It also includes built-in support for speculative decoding methods such as EAGLE3, MTP, and N-grams.
@@ -90,6 +94,7 @@ Run the following command to install and start the GPUStack server using Docker:
 sudo docker run -d --name gpustack \
     --restart unless-stopped \
     -p 80:80 \
+    -p 10161:10161 \
     --volume gpustack-data:/var/lib/gpustack \
     gpustack/gpustack
 ```
@@ -103,10 +108,12 @@ If you cannot pull images from `Docker Hub` or the download is very slow, you ca
 sudo docker run -d --name gpustack \
     --restart unless-stopped \
     -p 80:80 \
+    -p 10161:10161 \
     --volume gpustack-data:/var/lib/gpustack \
     quay.io/gpustack/gpustack \
     --system-default-container-registry quay.io
 ```
+
 </details>
 
 Check the GPUStack startup logs:
@@ -135,19 +142,19 @@ Open your browser and navigate to `http://your_host_ip` to access the GPUStack U
 
 5. Follow the UI guidelines to configure the new worker node. You will need to run a Docker command on the worker node to connect it to the GPUStack server. The command will look similar to the following:
 
-    ```bash
-    sudo docker run -d --name gpustack-worker \
-          --restart=unless-stopped \
-          --privileged \
-          --network=host \
-          --volume /var/run/docker.sock:/var/run/docker.sock \
-          --volume gpustack-data:/var/lib/gpustack \
-          --runtime nvidia \
-          gpustack/gpustack \
-          --server-url http://your_gpustack_server_url \
-          --token your_worker_token \
-          --advertise-address 192.168.1.2
-    ```
+   ```bash
+   sudo docker run -d --name gpustack-worker \
+         --restart=unless-stopped \
+         --privileged \
+         --network=host \
+         --volume /var/run/docker.sock:/var/run/docker.sock \
+         --volume gpustack-data:/var/lib/gpustack \
+         --runtime nvidia \
+         gpustack/gpustack \
+         --server-url http://your_gpustack_server_url \
+         --token your_worker_token \
+         --advertise-address 192.168.1.2
+   ```
 
 6. Execute the command on the worker node to connect it to the GPUStack server.
 
